@@ -1,0 +1,31 @@
+version: '3.7'
+
+x-logging:
+    &default-logging
+    driver: 'json-file'
+    options:
+        max-size: '5m'
+        max-file: '1'
+
+services:
+
+    traefik:
+        image: 'traefik:1.7.9-alpine'
+        command: [ 'traefik' ]
+        restart: 'unless-stopped'
+        networks: [ 'ingress', 'default' ]
+        logging: *default-logging
+        ports:
+            - '80:80'
+            - '8080:8080'
+            - '443:443'
+        volumes:
+            - './traefik:/etc/traefik'
+            - '/var/run/docker.sock:/var/run/docker.sock'
+
+networks:
+    ingress:
+    default:
+        name: 'public'
+        driver_opts:
+            com.docker.network.enable_ipv6: 'true'

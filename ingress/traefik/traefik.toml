@@ -1,0 +1,58 @@
+debug = true
+checkNewVersion = true
+keepTrailingSlash = true
+defaultEntryPoints = [ 'https', 'http' ]
+logLevel = 'DEBUG'
+
+[entryPoints]
+  [entryPoints.http]
+    address = ':80'
+    compress = true
+
+  [entryPoints.https]
+    address = ':443'
+    compress = true
+
+    [entryPoints.https.tls]
+      minVersion = 'VersionTLS12'
+
+  [entryPoints.traefik]
+    address = ':8080'
+    [entryPoints.traefik.auth]
+      headerField = 'X-WebAuth-User'
+      [entryPoints.traefik.auth.digest]
+        usersFile = '/etc/traefik/traefik.htdigest'
+
+[docker]
+  endpoint = 'unix:///var/run/docker.sock'
+  #domain = 'localhost'
+  watch = true
+  exposedByDefault = false
+  usebindportip = false
+  network = 'public'
+
+[acme]
+  email = 'hello@zanbaldwin.com'
+  storage = '/etc/traefik/certificates.json'
+  entryPoint = 'https'
+  acmeLogging = true
+  keyType = 'EC384'
+  onHostRule = true
+
+  [acme.tlsChallenge]
+    entryPoint = 'https'
+
+  [acme.httpChallenge]
+    entryPoint = 'http'
+
+[rest]
+  entryPoint = 'traefik'
+[ping]
+  entryPoint = 'traefik'
+[api]
+  entryPoint = 'traefik'
+  dashboard = true
+  debug = true
+
+  [api.statistics]
+    recentErrors = 10
