@@ -1,0 +1,67 @@
+version: '3.7'
+
+x-logging:
+  &default-logging
+    driver: "json-file"
+    options:
+        max-size: "5m"
+        max-file: "1"
+
+services:
+
+    php:
+        build: '${DOCKERFILE_PHP:-../../skeleton/php}'
+        restart: 'unless-stopped'
+        networks: [ 'default', 'services' ]
+        hostname: '${HOSTNAME}'
+        logging: *default-logging
+        volumes:
+            - source: './srv'
+              target: '/srv'
+              type: 'bind'
+    ssh:
+        build: '${DOCKERFILE_SSH:-../../skeleton/ssh}'
+        restart: 'unless-stopped'
+        networks: [ 'default', 'services' ]
+        hostname: '${HOSTNAME}'
+        volumes:
+            - source: './srv'
+              target: '/srv'
+              type: 'bind'
+            - source: '../../skeleton'
+              target: '/usr/share/srv'
+              type: 'bind'
+              read_only: true
+            - source: './ssh'
+              target: '/root/.ssh'
+              type: 'bind'
+              read_only: true
+        # Force a port here with "{hostPort}:22", or determine the port to
+        # connect to once the container is created with:
+        #    "docker port {containerName} 22"
+        ports: [ '22' ]
+    web:
+        build: '${DOCKERFILE_WEB:-../../skeleton/web}'
+        restart: 'unless-stopped'
+        networks: [ 'default', 'public' ]
+        hostname: '${HOSTNAME}'
+        depends_on: [ 'php' ]
+        volumes:
+            - source: './srv/public'
+              target: '/srv/public'
+              type: 'bind'
+              read_only: true
+        labels:
+            traefik.enable: false
+            traefik.frontend.rule: 'Host: ${HOSTNAME}'
+            traefik.backend.network: '${HOSTNAME}'
+
+networks:
+    default:
+        name: '${HOSTNAME}'
+        driver_opts:
+            com.docker.network.enable_ipv6: 'true'
+    services:
+        external: true
+    public:
+        external: true
