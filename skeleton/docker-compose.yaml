@@ -54,7 +54,6 @@ services:
         labels:
             traefik.enable: false
             traefik.frontend.rule: 'Host: ${HOSTNAME}'
-            traefik.backend.network: '${HOSTNAME}'
 
 networks:
     default:
