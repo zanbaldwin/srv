@@ -24,11 +24,12 @@ RUN sed -i -e 's/www-data/root/g' /usr/local/etc/php-fpm.d/www.conf \
     && apk add --no-cache --upgrade --virtual .extension-build-deps \
         libpng-dev      libjpeg-turbo-dev   libwebp-dev     giflib-dev \
         gmp-dev         icu-dev             libxslt-dev     gettext-dev \
-        libxml2-dev     libmcrypt-dev \
+        libxml2-dev     libmcrypt-dev       libzip-dev \
     && apk add --no-cache --upgrade --virtual .extension-runtime-deps \
         libpng          libjpeg-turbo       libwebp         giflib \
         gmp             icu                 libxslt         ssmtp \
         openssl         gettext             libmcrypt       libxml2 \
+        libzip \
     && echo 'sendmail_path="/usr/sbin/ssmtp -t"' > /usr/local/etc/php/conf.d/mail.ini \
     && echo 'FromLineOverride=YES' >> /etc/ssmtp/ssmtp.conf \
     && docker-php-ext-configure gd --with-jpeg-dir=/usr \
