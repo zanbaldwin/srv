@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Usage:
+#     bin/create.sh DOMAIN
+#
+# Where domain should be the main domain used to access the site.
+
 SRVDIR=$(dirname "$(dirname "$(readlink -f "$0")")")
 
 DOMAIN="${1}"
@@ -10,7 +15,7 @@ cp "${SRVDIR}/skeleton/docker-compose.yaml" "${SRVDIR}/apps/${DOMAIN}/docker-com
 touch "${SRVDIR}/apps/${DOMAIN}/.env"
 echo "HOSTNAME=${DOMAIN}" >> "${SRVDIR}/apps/${DOMAIN}/.env"
 
-mkdir -p "${SRVDIR}/apps/${DOMAIN}/srv"
+mkdir -p "${SRVDIR}/apps/${DOMAIN}/srv/public"
 
 ROOT=1
 
