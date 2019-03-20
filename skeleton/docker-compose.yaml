@@ -24,6 +24,7 @@ services:
         restart: 'unless-stopped'
         networks: [ 'default', 'services' ]
         hostname: '${HOSTNAME}'
+        logging: *default-logging
         volumes:
             - source: './srv'
               target: '/srv'
@@ -45,6 +46,7 @@ services:
         restart: 'unless-stopped'
         networks: [ 'default', 'public' ]
         hostname: '${HOSTNAME}'
+        logging: *default-logging
         depends_on: [ 'php' ]
         volumes:
             - source: './srv/public'
