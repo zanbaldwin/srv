@@ -1,4 +1,4 @@
-ARG NGINX_VERSION="1.13.5-alpine"
+ARG NGINX_VERSION="1.15-alpine"
 FROM "nginx:${NGINX_VERSION}"
 MAINTAINER Zan Baldwin "hello@zanbaldwin.com"
 RUN    apk add --no-cache --virtual .build-deps bash gcc git libc-dev make \

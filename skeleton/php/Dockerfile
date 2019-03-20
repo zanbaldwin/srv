@@ -1,4 +1,4 @@
-ARG PHP_VERSION="7.2-fpm-alpine3.7"
+ARG PHP_VERSION="7.3-fpm-alpine3.9"
 FROM "php:${PHP_VERSION}"
 MAINTAINER Zan Baldwin "hello@zanbaldwin.com"
 RUN apk add --no-cache --virtual .build-deps bash gcc git libc-dev make \

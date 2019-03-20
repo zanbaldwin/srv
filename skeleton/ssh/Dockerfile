@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.9
 MAINTAINER Zan Baldwin <hello@zanbaldwin.com>
 WORKDIR /srv
 EXPOSE 22
