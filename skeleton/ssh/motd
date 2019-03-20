@@ -1,4 +1,3 @@
-
 Welcome
 =======
 
@@ -8,14 +7,11 @@ Welcome
 * If MySQL is enabled, it will be available on host "mysql" NOT "localhost".
 
 * This environment is completely isolated and could disappear and/or get reset
-  at any time (when the system decides to install updates, change ports, etc).
+  at any time (when the system decides to install updates, etc).
   When this happens, anything outside the "/srv" directory will be LOST.
-   - The entire filesystem is volatile storage.
    - The "/srv" directory is the ONLY directory mounted to permanent storage.
-* "REMOTE HOST IDENTIFICATION HAS CHANGED" warnings are also common (and
-  expected) whenever an environment gets reset. You can ignore this warning.
 
-* The package manager is APK, use it to install any software you need (curl,
-  nano, git and mysql-client are installed by default):
-   - apk add [package-name]
 * The template used to create this environment can be found at "/usr/share/srv".
+  The CURRENT configuration for this environment is "/root/docker-compose.yaml".
+* If you want to customise the environment, submit your Dockerfiles and Compose
+  config to be run.
