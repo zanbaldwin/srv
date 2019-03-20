@@ -12,6 +12,7 @@ DOMAIN="${1}"
 mkdir -p "${SRVDIR}/apps/${DOMAIN}"
 
 cp "${SRVDIR}/skeleton/docker-compose.yaml" "${SRVDIR}/apps/${DOMAIN}/docker-compose.yaml"
+cp "${SRVDIR}/skeleton/docker-compose.override.yaml" "${SRVDIR}/apps/${DOMAIN}/docker-compose.override.yaml"
 touch "${SRVDIR}/apps/${DOMAIN}/.env"
 echo "HOSTNAME=${DOMAIN}" >> "${SRVDIR}/apps/${DOMAIN}/.env"
 

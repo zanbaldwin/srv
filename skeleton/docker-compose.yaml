@@ -19,28 +19,6 @@ services:
             - source: './srv'
               target: '/srv'
               type: 'bind'
-    ssh:
-        build: '${DOCKERFILE_SSH:-../../skeleton/ssh}'
-        restart: 'unless-stopped'
-        networks: [ 'default', 'services' ]
-        hostname: '${HOSTNAME}'
-        logging: *default-logging
-        volumes:
-            - source: './srv'
-              target: '/srv'
-              type: 'bind'
-            - source: '../../skeleton'
-              target: '/usr/share/srv'
-              type: 'bind'
-              read_only: true
-            - source: './ssh'
-              target: '/root/.ssh'
-              type: 'bind'
-              read_only: true
-        # Force a port here with "{hostPort}:22", or determine the port to
-        # connect to once the container is created with:
-        #    "docker port {containerName} 22"
-        ports: [ '22' ]
     web:
         build: '${DOCKERFILE_WEB:-../../skeleton/web}'
         restart: 'unless-stopped'

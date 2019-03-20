@@ -1,0 +1,50 @@
+version: '3.7'
+
+x-logging:
+    &default-logging
+    driver: "json-file"
+    options:
+        max-size: "5m"
+        max-file: "1"
+
+services:
+
+    php:
+    web:
+
+    ssh:
+        build: '${DOCKERFILE_SSH:-../../skeleton/ssh}'
+        restart: 'unless-stopped'
+        networks: [ 'default', 'services' ]
+        hostname: '${HOSTNAME}'
+        logging: *default-logging
+        volumes:
+            - source: './srv'
+              target: '/srv'
+              type: 'bind'
+            - source: './ssh'
+              target: '/root/.ssh'
+              type: 'bind'
+              read_only: true
+            # Reference default Docker image definitions.
+            - source: '../../skeleton'
+              target: '/usr/share/srv'
+              type: 'bind'
+              read_only: true
+            # Allow the Compose configuration file to be read.
+            - source: './docker-compose.yaml'                     
+              target: '/root/docker-compose.yaml'                 
+              type: 'bind'                                        
+              read_only: true
+            - source: './.env'
+              target: '/root/.env'
+              target: 'bind'
+              read_only: true
+            - source: './images'
+              target: '/root/images'
+              type: 'bind'
+              read_only: true
+        # Force a port here with "{hostPort}:22", or determine the port to
+        # connect to once the container is created with:
+        #    "docker-compose port ssh 22"
+        ports: [ '22' ]
