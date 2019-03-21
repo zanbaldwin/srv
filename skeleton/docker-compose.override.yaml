@@ -38,7 +38,7 @@ services:
               read_only: true
             - source: './.env'
               target: '/root/.env'
-              target: 'bind'
+              type: 'bind'
               read_only: true
             - source: './images'
               target: '/root/images'
