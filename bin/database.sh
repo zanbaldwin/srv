@@ -17,6 +17,10 @@ DOMAIN="${1}"
 shift 1
 
 (cd "${SRVDIR}/services"; docker-compose exec mysql mysql -u root -e "CREATE DATABASE IF NOT EXISTS \`${DOMAIN}\`;")
+if [ $? -ne 0 ]; then
+    echo "Could not connect to MySQL..."
+    exit 1
+fi
 echo "Created database \"${DOMAIN}\"..."
 
 for SERVICE in "${@}"; do

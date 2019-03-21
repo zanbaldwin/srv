@@ -17,6 +17,7 @@ touch "${SRVDIR}/apps/${DOMAIN}/.env"
 echo "HOSTNAME=${DOMAIN}" >> "${SRVDIR}/apps/${DOMAIN}/.env"
 
 mkdir -p "${SRVDIR}/apps/${DOMAIN}/srv/public"
+mkdir -p "${SRVDIR}/apps/${DOMAIN}/images"
 
 ROOT=1
 
