@@ -59,7 +59,7 @@ RUN    apk add --no-cache --upgrade --virtual .pecl-build-deps $PHPIZE_DEPS \
     && apk del .pecl-build-deps
 
 ARG ENABLE_MCRYPT=0
-RUN if [ ${ENABLE_MCRYPT} -eq 1]; then \
+RUN if [ ${ENABLE_MCRYPT} -eq 1 ]; then \
         curl -o /tmp/mcrypt.tgz https://pecl.php.net/get/mcrypt-1.0.1.tgz; \
         cd /tmp; tar vxf mcrypt.tgz; \
         rm /tmp/mcrypt.tgz; \
