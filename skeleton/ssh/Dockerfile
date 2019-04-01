@@ -22,7 +22,8 @@ RUN    apk update \
     && mkdir /var/run/sshd \
     && sed -i -e "s@/bin/ash@/bin/bash@g" /etc/passwd \
     && sed -i -e "s@#\?PasswordAuthentication .*\$@PasswordAuthentication no@g" /etc/ssh/sshd_config \
-    && ssh-keygen -A
+    && ssh-keygen -A \
+    && (echo "root:$(date +%s.%N | md5sum | cut -d' ' -f1)" | chpasswd)
 
 # Setup Shell Enironment
 RUN    curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o /etc/profile.d/00-git-prompt.sh \
